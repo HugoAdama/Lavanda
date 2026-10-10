@@ -22,7 +22,7 @@ const starArray = Array.from({ length: testimonial.rating });
   <figcaption class="autor">
     {testimonial.avatarUrl ? (
       <img
-        src={testimonial.avatarUrl}
+        src={testimonial.avatarUrl.startsWith('http') ? testimonial.avatarUrl : `${import.meta.env.BASE_URL.replace(/\/$/, '')}/${testimonial.avatarUrl.replace(/^\//, '')}`}
         alt={testimonial.author}
         class="avatar-foto"
         width="52"

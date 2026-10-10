@@ -74,3 +74,35 @@ La pagina principal no contiene logica de negocio ni marcado complejo inline; se
 * **Cero JavaScript innecesario:** Los componentes estaticos no inyectan JavaScript en el navegador del usuario. Solo los elementos que requieren interactividad (menu movil, acordeon FAQ, boton de WhatsApp y observador de scroll) contienen scripts minimos y optimizados.
 * **Optimizacion de Fuentes:** Preconexion a Google Fonts (`preconnect`) para reducir el tiempo de bloqueo de renderizado de `Poppins`, `Inter` y `Playfair Display`.
 * **Carga de Imagenes:** Carga prioritaria (`loading="eager"`) en la imagen principal del Hero y carga diferida (`loading="lazy"`) en fotografias secundarias de sostenibilidad y avatares.
+
+---
+
+## 5. Despliegue Continuo con GitHub Pages y GitHub Actions
+
+La plataforma se publica automaticamente en GitHub Pages mediante una canalizacion de integracion y despliegue continuo (CI/CD) alojada en el repositorio.
+
+### A. Configuracion de Base Path y Dominio
+Dado que el proyecto se aloja como un repositorio de usuario en una subruta (`https://hugoadama.github.io/Lavanda/`), el archivo `astro.config.mjs` define los parametros correspondientes:
+
+```javascript
+export default defineConfig({
+  site: 'https://hugoadama.github.io',
+  base: '/Lavanda/',
+});
+```
+
+* **site:** URL base del dominio canonico.
+* **base:** Subruta del repositorio para resolver enlaces relativos y assets.
+
+### B. Resolucion de Recursos Estaticos
+Para evitar errores de rutas 404 al cambiar entre entornos local y produccion, todas las imagenes y recursos en `public/` se resuelven utilizando `import.meta.env.BASE_URL`:
+
+```astro
+<img src={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/images/hero-laundry.jpg`} ... />
+```
+
+### C. Flujo de Trabajo Automatizado (.github/workflows/deploy.yml)
+Cada vez que se realiza un push a la rama `main`:
+1. **Job de construccion (build):** Descarga el repositorio, instala dependencias con `npm ci`, ejecuta `npm run build` y empaqueta la salida de `./dist` como artefacto de GitHub Pages.
+2. **Job de despliegue (deploy):** Publica el artefacto directamente en el entorno de GitHub Pages asignando el endpoint publico.
+

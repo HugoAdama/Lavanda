@@ -2,6 +2,10 @@
 
 Plataforma web de aterrizaje para servicio de lavanderia y tintoreria boutique a domicilio en 24 horas, desarrollada con Astro 7, TypeScript y arquitectura modular por separacion de responsabilidades.
 
+* **Sitio en vivo (GitHub Pages):** [https://hugoadama.github.io/Lavanda/](https://hugoadama.github.io/Lavanda/)
+* **Repositorio oficial:** [https://github.com/HugoAdama/Lavanda](https://github.com/HugoAdama/Lavanda)
+* **Despliegue automatizado:** GitHub Actions CI/CD en rama `main`
+
 ## Caracteristicas Principales
 
 * **Framework:** Astro 7 (astro ^7.3.8) con generacion estatica (SSG).

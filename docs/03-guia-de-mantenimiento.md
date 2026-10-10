@@ -117,3 +117,41 @@ Los iconos estan centralizados en `src/components/ui/Icon.astro` para evitar dep
 1. **Uso de Variables de Color:** Siempre utilice las variables CSS declaradas en `src/styles/global.css` (`var(--lavanda)`, `var(--menta)`, `var(--carbon)`, etc.) en lugar de codigos hexadecimales fijos.
 2. **Animaciones de Scroll:** Para hacer que un nuevo elemento entre con animacion suave al hacer scroll, agregue el atributo `data-reveal` a su contenedor HTML. Opcionalmente agregue `data-delay="200"` para escalonar su entrada.
 3. **Control de Peso de Imagenes:** Mantenga las imagenes en `public/images/` optimizadas en formato JPG o WebP con un peso inferior a 300 KB por fotografia.
+
+---
+
+## 5. Publicacion y Despliegue Continuo en GitHub Pages
+
+El proyecto cuenta con despliegue automatico mediante GitHub Actions configurado en `.github/workflows/deploy.yml`.
+
+### A. Procedimiento para Publicar Cambios
+Para desplegar cualquier cambio realizado en la web:
+1. Realice los cambios necesarios en los archivos de datos, componentes o estilos.
+2. Verifique la compilacion localmente:
+   ```bash
+   npm run build
+   ```
+3. Registre y envie los cambios a la rama principal:
+   ```bash
+   git add .
+   git commit -m "feat: descripcion clara de los cambios"
+   git push origin main
+   ```
+4. El flujo de GitHub Actions se activara de forma automatica, compilara el proyecto e implementara la nueva version en:
+   **https://hugoadama.github.io/Lavanda/**
+
+### B. Monitoreo de Despliegues
+* Ingrese a la pestana **Actions** en el repositorio `https://github.com/HugoAdama/Lavanda/actions`.
+* Alli vera el historial de ejecuciones de "Deploy to GitHub Pages" con los registros de construccion y publicacion.
+
+### C. Migracion a Dominio Personalizado (Opcional Futuro)
+Si en el futuro se adquiere un dominio propio (por ejemplo `lavanda.pe` o `lavanda.com`):
+1. En GitHub, dirijase a **Settings > Pages > Custom domain** e ingrese el dominio.
+2. En `astro.config.mjs`, actualice `site` con su dominio y cambie `base: '/'`:
+   ```javascript
+   export default defineConfig({
+     site: 'https://lavanda.pe',
+     base: '/',
+   });
+   ```
+

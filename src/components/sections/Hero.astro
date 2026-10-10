@@ -49,7 +49,7 @@ const stats: Stat[] = [
       <!-- Tarjeta principal con fotografía estética -->
       <div class="imagen-marco">
         <img
-          src="/images/hero-laundry.jpg"
+          src={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/images/hero-laundry.jpg`}
           alt="Ropa limpia y doblada con flores de lavanda en un cesto artesanal"
           class="hero-img"
           width="440"
