@@ -1,0 +1,42 @@
+---
+import SectionHeader from '../ui/SectionHeader.astro';
+import ServiceCard from '../cards/ServiceCard.astro';
+import { servicesData } from '../../data/services';
+---
+
+<section id="servicios">
+  <div class="contenedor">
+    <SectionHeader
+      badge="Servicios"
+      title="Cuidamos tu ropa como si fuera nuestra"
+      subtitle="Todo lo que necesitas para olvidarte por completo de la lavandería."
+    />
+
+    <div class="rejilla servicios-rejilla">
+      {servicesData.map((service, index) => (
+        <div data-reveal data-delay={`${(index % 3 + 1) * 100}`}>
+          <ServiceCard service={service} />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .servicios-rejilla {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 26px;
+  }
+
+  @media (max-width: 900px) {
+    .servicios-rejilla {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 580px) {
+    .servicios-rejilla {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,58 @@
+---
+import type { StepItem } from '../../types/landing';
+
+interface Props {
+  step: StepItem;
+}
+
+const { step } = Astro.props;
+---
+
+<div class="paso">
+  <div class="numero-paso" aria-hidden="true">{step.stepNumber}</div>
+  <h3>{step.title}</h3>
+  <p>{step.description}</p>
+</div>
+
+<style>
+  .paso {
+    text-align: center;
+    padding: 0 12px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .numero-paso {
+    display: flex;
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    background: var(--lavanda, #9B8EC4);
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.95);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  }
+
+  .paso:hover .numero-paso {
+    transform: scale(1.12);
+    box-shadow: 0 0 0 10px rgba(255, 255, 255, 1), 0 8px 20px rgba(155, 142, 196, 0.3);
+  }
+
+  .paso h3 {
+    font-size: 1.1rem;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+
+  .paso p {
+    font-size: 0.92rem;
+    opacity: 0.75;
+    line-height: 1.5;
+  }
+</style>

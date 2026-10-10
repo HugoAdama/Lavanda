@@ -1,0 +1,37 @@
+---
+interface Props {
+  text: string;
+  variant?: 'lavanda' | 'white';
+  class?: string;
+}
+
+const { text, variant = 'lavanda', class: className = '' } = Astro.props;
+---
+
+<span class={`etiqueta etiqueta-${variant} ${className}`}>
+  {text}
+</span>
+
+<style>
+  .etiqueta {
+    display: inline-block;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 0.85rem;
+    padding: 6px 16px;
+    border-radius: var(--radio-full, 50px);
+    margin-bottom: 16px;
+    letter-spacing: 0.3px;
+  }
+
+  .etiqueta-lavanda {
+    color: var(--lavanda, #9B8EC4);
+    background: var(--lavanda-claro, #E8E3F3);
+  }
+
+  .etiqueta-white {
+    color: var(--lavanda, #9B8EC4);
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(155, 142, 196, 0.12);
+  }
+</style>

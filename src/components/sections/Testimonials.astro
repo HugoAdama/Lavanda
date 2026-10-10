@@ -1,0 +1,31 @@
+---
+import SectionHeader from '../ui/SectionHeader.astro';
+import TestimonialCard from '../cards/TestimonialCard.astro';
+import { testimonialsData } from '../../data/testimonials';
+---
+
+<section class="fondo-claro" id="testimonios">
+  <div class="contenedor">
+    <SectionHeader
+      badge="Testimonios"
+      badgeVariant="white"
+      title="Lo que dicen nuestros clientes"
+      subtitle="Historias reales de personas que recuperaron su tiempo libre con LAVANDA."
+    />
+
+    <div class="rejilla testimonios-rejilla">
+      {testimonialsData.map((testimonial, index) => (
+        <div data-reveal data-delay={`${(index + 1) * 150}`}>
+          <TestimonialCard testimonial={testimonial} />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonios-rejilla {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+</style>

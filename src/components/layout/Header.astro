@@ -1,0 +1,311 @@
+---
+import { siteConfig } from '../../data/siteConfig';
+import { navigationLinks } from '../../data/navigation';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+---
+
+<header class="header" id="site-header">
+  <div class="contenedor nav">
+    <a href="#inicio" class="logo" aria-label={`Ir al inicio de ${siteConfig.name}`}>
+      LA<span>{siteConfig.brandAcent}</span>ANDA
+    </a>
+
+    <!-- Navegación de escritorio -->
+    <nav class="nav-desktop" aria-label="Navegación principal">
+      <ul class="nav-links">
+        {navigationLinks.map((link) => (
+          <li>
+            <a href={link.href}>{link.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <!-- Botón CTA escritorio + botón menú móvil -->
+    <div class="nav-actions">
+      <div class="cta-desktop">
+        <Button href="#contacto" variant="primary">Agendar</Button>
+      </div>
+
+      <button
+        id="menu-toggle"
+        class="menu-btn"
+        aria-label="Abrir menú de navegación"
+        aria-expanded="false"
+        aria-controls="mobile-drawer"
+      >
+        <span class="icono-abrir">
+          <Icon name="menu" size={24} color="var(--carbon, #2D2D3A)" />
+        </span>
+        <span class="icono-cerrar">
+          <Icon name="x" size={24} color="var(--carbon, #2D2D3A)" />
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Drawer móvil con animación y glassmorphism -->
+  <div id="mobile-drawer" class="mobile-drawer" aria-hidden="true">
+    <div class="drawer-contenido">
+      <nav aria-label="Navegación móvil">
+        <ul class="mobile-links">
+          {navigationLinks.map((link) => (
+            <li>
+              <a href={link.href} class="mobile-nav-link">{link.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <div class="mobile-cta-wrapper">
+        <Button href="#contacto" variant="primary" class="mobile-cta-btn">
+          Agenda tu primer servicio
+        </Button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const header = document.getElementById('site-header');
+  const toggleBtn = document.getElementById('menu-toggle');
+  const drawer = document.getElementById('mobile-drawer');
+  const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+  // Reducción y sombra del header al hacer scroll
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) {
+      header?.classList.add('header-scrolled');
+    } else {
+      header?.classList.remove('header-scrolled');
+    }
+  }, { passive: true });
+
+  // Alternar menú móvil
+  function toggleMenu() {
+    const isOpen = drawer?.classList.toggle('drawer-abierto');
+    toggleBtn?.classList.toggle('btn-activo');
+    toggleBtn?.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    drawer?.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }
+
+  toggleBtn?.addEventListener('click', toggleMenu);
+
+  // Cerrar menú al hacer clic en un enlace
+  mobileLinks.forEach((link) => {
+    link.addEventListener('click', () => {
+      if (drawer?.classList.contains('drawer-abierto')) {
+        toggleMenu();
+      }
+    });
+  });
+
+  // Cerrar al presionar la tecla Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && drawer?.classList.contains('drawer-abierto')) {
+      toggleMenu();
+    }
+  });
+</script>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(250, 250, 248, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--lavanda-claro, #E8E3F3);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .header.header-scrolled {
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 10px 30px rgba(155, 142, 196, 0.14);
+    border-bottom-color: rgba(155, 142, 196, 0.25);
+  }
+
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 76px;
+    transition: height 0.3s ease;
+  }
+
+  .header.header-scrolled .nav {
+    height: 64px;
+  }
+
+  .logo {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1.55rem;
+    letter-spacing: 1px;
+    color: var(--lavanda, #9B8EC4);
+  }
+
+  .logo span {
+    color: var(--menta, #7EC8C8);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-links a {
+    color: var(--carbon, #2D2D3A);
+    position: relative;
+    padding: 4px 0;
+  }
+
+  .nav-links a:hover {
+    color: var(--lavanda, #9B8EC4);
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--lavanda, #9B8EC4);
+    transition: width 0.3s ease;
+  }
+
+  .nav-links a:hover::after {
+    width: 100%;
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  /* Botón hamburguesa móvil */
+  .menu-btn {
+    display: none;
+    background: #ffffff;
+    border: 1px solid var(--lavanda-claro, #E8E3F3);
+    border-radius: 12px;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transicion-base, all 0.3s ease);
+  }
+
+  .menu-btn:hover {
+    border-color: var(--lavanda, #9B8EC4);
+    background: var(--lavanda-claro, #E8E3F3);
+  }
+
+  .icono-cerrar {
+    display: none;
+  }
+
+  .menu-btn.btn-activo .icono-abrir {
+    display: none;
+  }
+
+  .menu-btn.btn-activo .icono-cerrar {
+    display: flex;
+  }
+
+  /* Drawer móvil */
+  .mobile-drawer {
+    display: none;
+    position: fixed;
+    top: 76px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: calc(100vh - 76px);
+    background: rgba(250, 250, 248, 0.98);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 32px 24px;
+    z-index: 99;
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, visibility 0.35s ease;
+  }
+
+  .mobile-drawer.drawer-abierto {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .drawer-contenido {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  .mobile-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .mobile-nav-link {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--carbon, #2D2D3A);
+    display: block;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--lavanda-claro, #E8E3F3);
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+
+  .mobile-nav-link:hover {
+    color: var(--lavanda, #9B8EC4);
+    transform: translateX(6px);
+  }
+
+  .mobile-cta-wrapper {
+    padding-top: 24px;
+    margin-bottom: 32px;
+  }
+
+  :global(.mobile-cta-btn) {
+    width: 100%;
+    padding: 16px;
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: 860px) {
+    .nav-desktop,
+    .cta-desktop {
+      display: none;
+    }
+    .menu-btn,
+    .mobile-drawer {
+      display: block;
+    }
+  }
+</style>

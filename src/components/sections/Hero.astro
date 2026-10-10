@@ -1,0 +1,283 @@
+---
+import Badge from '../ui/Badge.astro';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+
+interface Stat {
+  strong: string;
+  small: string;
+}
+
+const stats: Stat[] = [
+  { strong: '24h', small: 'Entrega rápida' },
+  { strong: '100%', small: 'Eco-friendly' },
+  { strong: 'Puerta a puerta', small: 'Sin complicaciones' },
+];
+---
+
+<section class="hero" id="inicio">
+  <div class="contenedor hero-contenedor">
+    <div class="hero-texto">
+      <Badge text="Frescura que se siente" />
+      <h1>
+        Tu ropa impecable, <span class="acento">sin mover un dedo.</span>
+      </h1>
+      <p class="hero-descripcion">
+        Recogemos, lavamos y entregamos en 24h. Tú vive, nosotros lavamos con el máximo cuidado y respeto ambiental.
+      </p>
+
+      <div class="hero-botones">
+        <Button href="#contacto" variant="primary">
+          Agenda tu primer servicio
+        </Button>
+        <Button href="#como-funciona" variant="outline">
+          Ver cómo funciona
+        </Button>
+      </div>
+
+      <div class="hero-datos">
+        {stats.map((stat) => (
+          <div class="dato-item">
+            <strong>{stat.strong}</strong>
+            <small>{stat.small}</small>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <!-- Tarjeta principal con fotografía estética -->
+      <div class="imagen-marco">
+        <img
+          src="/images/hero-laundry.jpg"
+          alt="Ropa limpia y doblada con flores de lavanda en un cesto artesanal"
+          class="hero-img"
+          width="440"
+          height="440"
+          loading="eager"
+        />
+
+        <!-- Badge flotante 1: Valoración -->
+        <div class="badge-flotante badge-rating">
+          <div class="rating-estrellas">
+            <Icon name="star" size={14} color="var(--dorado, #D4AF37)" />
+            <Icon name="star" size={14} color="var(--dorado, #D4AF37)" />
+            <Icon name="star" size={14} color="var(--dorado, #D4AF37)" />
+            <Icon name="star" size={14} color="var(--dorado, #D4AF37)" />
+            <Icon name="star" size={14} color="var(--dorado, #D4AF37)" />
+          </div>
+          <span class="rating-texto"><strong>4.9/5</strong> (850+ clientes)</span>
+        </div>
+
+        <!-- Badge flotante 2: Garantía fresca 24h -->
+        <div class="badge-flotante badge-garantia">
+          <span class="garantia-icono">
+            <Icon name="wash" size={20} color="var(--lavanda, #9B8EC4)" />
+          </span>
+          <div>
+            <strong>Frescura 24h</strong>
+            <small>Entrega puntual</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Efectos sutiles de fondo -->
+      <div class="aura-fondo" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    background: linear-gradient(135deg, var(--lavanda-claro, #E8E3F3) 0%, var(--fondo, #FAFAF8) 75%);
+    position: relative;
+    overflow: hidden;
+    padding: 90px 0 80px;
+  }
+
+  .hero-contenedor {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  .hero h1 {
+    font-size: 3.3rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+  }
+
+  .hero-descripcion {
+    font-size: 1.18rem;
+    opacity: 0.85;
+    margin-bottom: 34px;
+    max-width: 490px;
+    line-height: 1.6;
+  }
+
+  .hero-botones {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .hero-datos {
+    display: flex;
+    gap: 36px;
+    margin-top: 48px;
+    flex-wrap: wrap;
+  }
+
+  .dato-item strong {
+    display: block;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.6rem;
+    color: var(--lavanda, #9B8EC4);
+  }
+
+  .dato-item small {
+    font-size: 0.92rem;
+    opacity: 0.75;
+  }
+
+  /* Visual con Imagen y Badges */
+  .hero-visual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .imagen-marco {
+    position: relative;
+    z-index: 2;
+    border-radius: 28px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 24px 60px rgba(155, 142, 196, 0.28);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .imagen-marco:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 30px 70px rgba(155, 142, 196, 0.35);
+  }
+
+  .hero-img {
+    display: block;
+    width: 100%;
+    max-width: 430px;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 20px;
+  }
+
+  /* Badges Flotantes con Glassmorphism */
+  .badge-flotante {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 12px 18px;
+    border-radius: 50px;
+    box-shadow: 0 12px 30px rgba(45, 45, 58, 0.12);
+    border: 1px solid rgba(232, 227, 243, 0.8);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: floatBadge 5s ease-in-out infinite alternate;
+  }
+
+  .badge-rating {
+    top: 24px;
+    left: -24px;
+  }
+
+  .rating-estrellas {
+    display: flex;
+    gap: 2px;
+  }
+
+  .rating-texto {
+    font-size: 0.84rem;
+    color: var(--carbon, #2D2D3A);
+  }
+
+  .badge-garantia {
+    bottom: 24px;
+    right: -24px;
+    border-radius: 18px;
+    animation-duration: 6s;
+    animation-delay: 1s;
+  }
+
+  .garantia-icono {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    background: var(--lavanda-claro, #E8E3F3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .badge-garantia strong {
+    display: block;
+    font-size: 0.88rem;
+    color: var(--carbon, #2D2D3A);
+    line-height: 1.2;
+  }
+
+  .badge-garantia small {
+    font-size: 0.78rem;
+    opacity: 0.75;
+  }
+
+  .aura-fondo {
+    position: absolute;
+    width: 380px;
+    height: 380px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(155, 142, 196, 0.4) 0%, rgba(126, 200, 200, 0.2) 60%, transparent 80%);
+    filter: blur(40px);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  @keyframes floatBadge {
+    0% {
+      transform: translateY(0px);
+    }
+    100% {
+      transform: translateY(-8px);
+    }
+  }
+
+  @media (max-width: 960px) {
+    .hero {
+      padding: 60px 0 50px;
+    }
+    .hero-contenedor {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+    }
+    .badge-rating {
+      left: 0;
+      top: 10px;
+    }
+    .badge-garantia {
+      right: 0;
+      bottom: 10px;
+    }
+  }
+</style>

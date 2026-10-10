@@ -1,0 +1,127 @@
+---
+import type { TestimonialItem } from '../../types/landing';
+import Icon from '../ui/Icon.astro';
+
+interface Props {
+  testimonial: TestimonialItem;
+}
+
+const { testimonial } = Astro.props;
+const starArray = Array.from({ length: testimonial.rating });
+---
+
+<figure class="testimonio">
+  <div class="estrellas" aria-label={`Calificación: ${testimonial.rating} de 5 estrellas`}>
+    {starArray.map(() => (
+      <Icon name="star" size={18} color="var(--dorado, #D4AF37)" class="estrella-svg" />
+    ))}
+  </div>
+  <blockquote>
+    <p>"{testimonial.quote}"</p>
+  </blockquote>
+  <figcaption class="autor">
+    {testimonial.avatarUrl ? (
+      <img
+        src={testimonial.avatarUrl}
+        alt={testimonial.author}
+        class="avatar-foto"
+        width="52"
+        height="52"
+        loading="lazy"
+      />
+    ) : (
+      <div class="avatar" aria-hidden="true">{testimonial.initials}</div>
+    )}
+    <div class="info-autor">
+      <strong>{testimonial.author}</strong>
+      <small>{testimonial.role}</small>
+    </div>
+  </figcaption>
+</figure>
+
+<style>
+  .testimonio {
+    background: #ffffff;
+    padding: 34px 30px;
+    border-radius: var(--radio, 20px);
+    border: 1px solid var(--lavanda-claro, #E8E3F3);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: var(--transicion-base, all 0.3s ease);
+    position: relative;
+    box-shadow: 0 4px 16px rgba(155, 142, 196, 0.08);
+  }
+
+  .testimonio:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 36px rgba(155, 142, 196, 0.2);
+    border-color: rgba(155, 142, 196, 0.45);
+  }
+
+  .estrellas {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+  }
+
+  .estrella-svg {
+    filter: drop-shadow(0 1px 3px rgba(212, 175, 55, 0.3));
+  }
+
+  blockquote {
+    flex: 1;
+    margin: 0;
+  }
+
+  blockquote p {
+    font-size: 0.98rem;
+    line-height: 1.65;
+    margin-bottom: 24px;
+    font-style: italic;
+    color: var(--carbon, #2D2D3A);
+  }
+
+  .autor {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .avatar-foto {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(155, 142, 196, 0.25);
+    border: 2px solid var(--lavanda-claro, #E8E3F3);
+  }
+
+  .avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--lavanda, #9B8EC4), var(--menta, #7EC8C8));
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+  }
+
+  .info-autor strong {
+    display: block;
+    font-size: 1rem;
+    color: var(--carbon, #2D2D3A);
+  }
+
+  .info-autor small {
+    display: block;
+    font-size: 0.88rem;
+    opacity: 0.65;
+  }
+</style>

@@ -1,0 +1,279 @@
+---
+import Badge from '../ui/Badge.astro';
+import Icon from '../ui/Icon.astro';
+import { ecoFeatures, ecoMetrics } from '../../data/sustainability';
+---
+
+<section class="eco" id="sostenibilidad">
+  <div class="contenedor">
+    <div class="eco-contenedor">
+      <div class="eco-info">
+        <Badge text="Sostenibilidad" />
+        <h2>Cuidamos tu ropa <span class="acento">y el planeta</span></h2>
+        <p class="eco-descripcion">
+          Cada lavado cuenta. Por eso trabajamos exclusivamente con procesos de bajo consumo hídrico, detergentes botánicos biodegradables y rutas inteligentes optimizadas.
+        </p>
+
+        <ul class="eco-lista">
+          {ecoFeatures.map((feature) => (
+            <li>
+              <span class="icono-eco">
+                <Icon name={feature.icon} size={22} color="#2A7B7B" />
+              </span>
+              <div>
+                <strong>{feature.title}</strong>
+                <small>{feature.description}</small>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="eco-visual">
+        <div class="eco-imagen-contenedor">
+          <img
+            src="/images/eco-care.jpg"
+            alt="Detergente natural botánico y toallas de algodón blanco con flores de lavanda"
+            class="eco-img"
+            width="500"
+            height="375"
+            loading="lazy"
+          />
+          <div class="eco-badge-overlay">
+            <Icon name="leaf" size={18} color="#2A7B7B" />
+            <span>Fórmula 100% biodegradable</span>
+          </div>
+        </div>
+
+        <div class="eco-cifras" id="eco-cifras-grid">
+          {ecoMetrics.map((metric) => (
+            <div class="cifra">
+              <strong class="cifra-numero" data-original={metric.value}>{metric.value}</strong>
+              <small>{metric.label}</small>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const cifrasGrid = document.getElementById('eco-cifras-grid');
+  const cifras = document.querySelectorAll('.cifra-numero');
+
+  if (cifrasGrid && cifras.length) {
+    let animado = false;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !animado) {
+          animado = true;
+          cifras.forEach((el) => {
+            const original = el.getAttribute('data-original') || '';
+            const match = original.match(/(-?\d+)(.*)/);
+            if (!match) return;
+
+            const target = parseInt(match[1], 10);
+            const suffix = match[2];
+            const isNegative = target < 0;
+            const absTarget = Math.abs(target);
+            const duration = 1200;
+            const startTime = performance.now();
+
+            function updateCounter(currentTime: number) {
+              const elapsed = currentTime - startTime;
+              const progress = Math.min(elapsed / duration, 1);
+              // Ease-out cubic
+              const easeOut = 1 - Math.pow(1 - progress, 3);
+              const currentVal = Math.round(easeOut * absTarget);
+
+              el.textContent = `${isNegative ? '-' : ''}${currentVal}${suffix}`;
+
+              if (progress < 1) {
+                requestAnimationFrame(updateCounter);
+              } else {
+                el.textContent = original;
+              }
+            }
+
+            requestAnimationFrame(updateCounter);
+          });
+        }
+      });
+    }, { threshold: 0.3 });
+
+    observer.observe(cifrasGrid);
+  }
+</script>
+
+<style>
+  .eco {
+    background: #ffffff;
+    padding: 100px 0;
+  }
+
+  .eco-contenedor {
+    display: grid;
+    grid-template-columns: 1fr 1.05fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .eco-info h2 {
+    font-size: 2.35rem;
+    margin-bottom: 18px;
+    line-height: 1.25;
+  }
+
+  .eco-descripcion {
+    font-size: 1.05rem;
+    opacity: 0.8;
+    line-height: 1.65;
+    margin-bottom: 28px;
+  }
+
+  .eco-lista {
+    list-style: none;
+    margin-top: 24px;
+    padding: 0;
+  }
+
+  .eco-lista li {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 22px;
+    align-items: flex-start;
+  }
+
+  .icono-eco {
+    flex: none;
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    background: #e2f5f5;
+    border: 1px solid rgba(126, 200, 200, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, background 0.3s ease;
+  }
+
+  .eco-lista li:hover .icono-eco {
+    transform: scale(1.1);
+    background: #d1eded;
+  }
+
+  .eco-lista strong {
+    display: block;
+    font-size: 1.02rem;
+    color: var(--carbon, #2D2D3A);
+    margin-bottom: 2px;
+  }
+
+  .eco-lista small {
+    display: block;
+    opacity: 0.75;
+    font-size: 0.92rem;
+    line-height: 1.45;
+  }
+
+  /* Visual con Imagen y Cifras */
+  .eco-visual {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .eco-imagen-contenedor {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 16px 40px rgba(126, 200, 200, 0.22);
+    border: 1px solid rgba(232, 227, 243, 0.9);
+  }
+
+  .eco-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .eco-imagen-contenedor:hover .eco-img {
+    transform: scale(1.03);
+  }
+
+  .eco-badge-overlay {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 8px 16px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: var(--carbon, #2D2D3A);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  .eco-cifras {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+
+  .cifra {
+    background: linear-gradient(135deg, var(--lavanda-claro, #E8E3F3), #ffffff);
+    border: 1px solid rgba(155, 142, 196, 0.25);
+    border-radius: 16px;
+    padding: 20px 12px;
+    text-align: center;
+    transition: var(--transicion-base, all 0.3s ease);
+  }
+
+  .cifra:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(155, 142, 196, 0.16);
+    border-color: rgba(155, 142, 196, 0.4);
+  }
+
+  .cifra strong {
+    display: block;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.8rem;
+    color: var(--lavanda, #9B8EC4);
+    margin-bottom: 2px;
+  }
+
+  .cifra small {
+    font-size: 0.8rem;
+    opacity: 0.8;
+    font-weight: 500;
+    line-height: 1.2;
+    display: block;
+  }
+
+  @media (max-width: 960px) {
+    .eco {
+      padding: 60px 0;
+    }
+    .eco-contenedor {
+      grid-template-columns: 1fr;
+      gap: 44px;
+    }
+    .eco-info h2 {
+      font-size: 2rem;
+    }
+    .eco-cifras {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+  }
+</style>

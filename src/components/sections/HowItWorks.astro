@@ -1,0 +1,60 @@
+---
+import SectionHeader from '../ui/SectionHeader.astro';
+import StepCard from '../cards/StepCard.astro';
+import { stepsData } from '../../data/howItWorks';
+---
+
+<section class="fondo-claro" id="como-funciona">
+  <div class="contenedor">
+    <SectionHeader
+      badge="Cómo funciona"
+      badgeVariant="white"
+      title="Cuatro pasos y listo"
+      subtitle="Recogemos, lavamos y entregamos. Tú no tienes que hacer nada más."
+    />
+
+    <div class="pasos-rejilla">
+      {stepsData.map((step, index) => (
+        <div data-reveal data-delay={`${(index + 1) * 100}`}>
+          <StepCard step={step} />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .pasos-rejilla {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+    position: relative;
+  }
+
+  .pasos-rejilla::before {
+    content: '';
+    position: absolute;
+    top: 30px;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--lavanda, #9B8EC4) 0,
+      var(--lavanda, #9B8EC4) 8px,
+      transparent 8px,
+      transparent 16px
+    );
+    opacity: 0.45;
+    z-index: 0;
+  }
+
+  @media (max-width: 860px) {
+    .pasos-rejilla {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+    .pasos-rejilla::before {
+      display: none;
+    }
+  }
+</style>

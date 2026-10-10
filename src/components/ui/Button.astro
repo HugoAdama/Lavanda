@@ -1,0 +1,92 @@
+---
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'outline' | 'white';
+  class?: string;
+  type?: 'button' | 'submit' | 'reset';
+  target?: string;
+  rel?: string;
+}
+
+const {
+  href,
+  variant = 'primary',
+  class: className = '',
+  type = 'button',
+  target,
+  rel,
+} = Astro.props;
+
+const variantClasses = {
+  primary: 'btn-primary',
+  outline: 'btn-outline',
+  white: 'btn-white',
+};
+
+const classes = `btn ${variantClasses[variant]} ${className}`.trim();
+---
+
+{
+  href ? (
+    <a href={href} class={classes} target={target} rel={rel}>
+      <slot />
+    </a>
+  ) : (
+    <button type={type} class={classes}>
+      <slot />
+    </button>
+  )
+}
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 14px 32px;
+    border-radius: var(--radio-full, 50px);
+    transition: var(--transicion-base, all 0.3s ease);
+    cursor: pointer;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .btn-primary {
+    background: var(--lavanda, #9B8EC4);
+    color: #ffffff;
+    box-shadow: 0 8px 20px rgba(155, 142, 196, 0.4);
+  }
+
+  .btn-primary:hover {
+    background: var(--lavanda-hover, #8A7BB6);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 26px rgba(155, 142, 196, 0.5);
+  }
+
+  .btn-outline {
+    background: transparent;
+    border: 2px solid var(--lavanda, #9B8EC4);
+    color: var(--lavanda, #9B8EC4);
+  }
+
+  .btn-outline:hover {
+    background: var(--lavanda, #9B8EC4);
+    color: #ffffff;
+    transform: translateY(-2px);
+  }
+
+  .btn-white {
+    background: #ffffff;
+    color: var(--lavanda, #9B8EC4);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-white:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+  }
+</style>

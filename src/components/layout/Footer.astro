@@ -1,0 +1,165 @@
+---
+import { siteConfig } from '../../data/siteConfig';
+import Icon from '../ui/Icon.astro';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="contenedor">
+    <div class="footer-grid">
+      <div class="footer-col brand-col">
+        <a href="#inicio" class="logo">
+          LA<span>{siteConfig.brandAcent}</span>ANDA
+        </a>
+        <p>
+          {siteConfig.tagline}. Recogemos, lavamos y entregamos en tu puerta para que disfrutes de tu tiempo libre.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul class="contacto-lista">
+          <li>
+            <span class="icono-contacto">
+              <Icon name="phone" size={17} color="var(--menta, #7EC8C8)" />
+            </span>
+            <span>{siteConfig.contact.phone}</span>
+          </li>
+          <li>
+            <span class="icono-contacto">
+              <Icon name="mail" size={17} color="var(--menta, #7EC8C8)" />
+            </span>
+            <span>{siteConfig.contact.email}</span>
+          </li>
+          <li>
+            <span class="icono-contacto">
+              <Icon name="pin" size={17} color="var(--menta, #7EC8C8)" />
+            </span>
+            <span>{siteConfig.contact.location}</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Horarios</h4>
+        <ul>
+          <li>{siteConfig.hours.weekdays}</li>
+          <li>{siteConfig.hours.saturday}</li>
+          <li>{siteConfig.hours.sunday}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="copy-container">
+      <div class="copy-line">
+        <p>© {currentYear} {siteConfig.name}. Todos los derechos reservados.</p>
+        <p class="autor-credito">
+          Desarrollado por <strong>Hugo Adama</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--carbon, #2D2D3A);
+    color: #ffffff;
+    padding: 64px 0 28px;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 40px;
+  }
+
+  .logo {
+    display: inline-block;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+    color: var(--lavanda, #9B8EC4);
+    margin-bottom: 14px;
+  }
+
+  .logo span {
+    color: var(--menta, #7EC8C8);
+  }
+
+  .footer-col p {
+    font-size: 0.92rem;
+    opacity: 0.75;
+    line-height: 1.6;
+    max-width: 320px;
+  }
+
+  .footer-col h4 {
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 16px;
+    font-size: 1.05rem;
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  .footer-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer-col li {
+    font-size: 0.92rem;
+    opacity: 0.8;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .icono-contacto {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: rgba(126, 200, 200, 0.12);
+    flex-shrink: 0;
+  }
+
+  .copy-container {
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    padding-top: 24px;
+  }
+
+  .copy-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 0.88rem;
+    opacity: 0.75;
+  }
+
+  .autor-credito strong {
+    color: var(--menta, #7EC8C8);
+    font-weight: 600;
+  }
+
+  @media (max-width: 860px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .copy-line {
+      flex-direction: column;
+      text-align: center;
+      gap: 8px;
+    }
+  }
+</style>

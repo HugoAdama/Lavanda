@@ -1,0 +1,149 @@
+---
+import type { PricingPlan } from '../../types/landing';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+
+interface Props {
+  plan: PricingPlan;
+}
+
+const { plan } = Astro.props;
+---
+
+<div class={`plan ${plan.isPopular ? 'destacado' : ''}`}>
+  {plan.badge && <span class="insignia">{plan.badge}</span>}
+  <h3>{plan.name}</h3>
+  <p class="subtitulo">{plan.subtitle}</p>
+  
+  <div class="precio">
+    {plan.price} <small>{plan.period}</small>
+  </div>
+  
+  <ul class="lista-caracteristicas">
+    {plan.features.map((feature) => (
+      <li>
+        <span class="check-icono">
+          <Icon name="check" size={14} color="#ffffff" />
+        </span>
+        <span class="texto-caracteristica">{feature}</span>
+      </li>
+    ))}
+  </ul>
+  
+  <Button
+    href={plan.ctaHref}
+    variant={plan.isPopular ? 'primary' : 'outline'}
+  >
+    {plan.ctaText}
+  </Button>
+</div>
+
+<style>
+  .plan {
+    background: #ffffff;
+    border: 2px solid var(--lavanda-claro, #E8E3F3);
+    border-radius: var(--radio, 20px);
+    padding: 40px 30px;
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: var(--transicion-base, all 0.3s ease);
+  }
+
+  .plan:hover {
+    border-color: var(--lavanda, #9B8EC4);
+    box-shadow: 0 12px 30px rgba(155, 142, 196, 0.18);
+  }
+
+  .plan.destacado {
+    border-color: var(--lavanda, #9B8EC4);
+    transform: scale(1.04);
+    box-shadow: 0 20px 44px rgba(155, 142, 196, 0.28);
+    z-index: 2;
+    background: linear-gradient(180deg, #ffffff 0%, #faf8fd 100%);
+  }
+
+  .insignia {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--dorado, #D4AF37);
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 5px 18px;
+    border-radius: var(--radio-full, 50px);
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.35);
+  }
+
+  .plan h3 {
+    font-size: 1.35rem;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+
+  .subtitulo {
+    font-size: 0.92rem;
+    opacity: 0.7;
+    margin-bottom: 8px;
+  }
+
+  .precio {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.7rem;
+    font-weight: 700;
+    color: var(--lavanda, #9B8EC4);
+    margin: 12px 0 6px;
+  }
+
+  .precio small {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--carbon, #2D2D3A);
+    opacity: 0.6;
+  }
+
+  .lista-caracteristicas {
+    list-style: none;
+    margin: 24px 0 28px;
+    text-align: left;
+    flex: 1;
+    padding: 0;
+  }
+
+  .lista-caracteristicas li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--lavanda-claro, #E8E3F3);
+    font-size: 0.93rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .check-icono {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--menta, #7EC8C8);
+    flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(126, 200, 200, 0.4);
+  }
+
+  .texto-caracteristica {
+    flex: 1;
+  }
+
+  @media (max-width: 860px) {
+    .plan.destacado {
+      transform: none;
+    }
+  }
+</style>

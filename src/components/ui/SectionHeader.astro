@@ -1,0 +1,54 @@
+---
+import Badge from './Badge.astro';
+
+interface Props {
+  badge?: string;
+  badgeVariant?: 'lavanda' | 'white';
+  title: string;
+  subtitle?: string;
+  class?: string;
+}
+
+const {
+  badge,
+  badgeVariant = 'lavanda',
+  title,
+  subtitle,
+  class: className = '',
+} = Astro.props;
+---
+
+<header class={`titulo-seccion ${className}`}>
+  {badge && <Badge text={badge} variant={badgeVariant} />}
+  <h2>{title}</h2>
+  {subtitle && <p>{subtitle}</p>}
+</header>
+
+<style>
+  .titulo-seccion {
+    text-align: center;
+    max-width: 620px;
+    margin: 0 auto 56px;
+  }
+
+  .titulo-seccion h2 {
+    font-size: 2.2rem;
+    margin-bottom: 12px;
+    color: var(--carbon, #2D2D3A);
+  }
+
+  .titulo-seccion p {
+    font-size: 1.05rem;
+    opacity: 0.75;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 860px) {
+    .titulo-seccion {
+      margin-bottom: 40px;
+    }
+    .titulo-seccion h2 {
+      font-size: 1.85rem;
+    }
+  }
+</style>

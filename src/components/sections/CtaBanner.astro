@@ -1,0 +1,111 @@
+---
+import Button from '../ui/Button.astro';
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  buttonText?: string;
+  buttonHref?: string;
+}
+
+const {
+  title = 'Menos carga, más vida',
+  subtitle = 'Agenda tu primer servicio y descubre la frescura que se siente.',
+  buttonText = 'Agenda tu primer servicio',
+  buttonHref = '#contacto',
+} = Astro.props;
+---
+
+<section class="cta" id="contacto">
+  <div class="contenedor">
+    <div class="cta-caja">
+      <h2>{title}</h2>
+      <p>{subtitle}</p>
+      <div class="cta-btn-wrapper">
+        <Button href={buttonHref} variant="white">
+          {buttonText}
+        </Button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    padding: 20px 0 90px;
+  }
+
+  .cta-caja {
+    background: linear-gradient(135deg, var(--lavanda, #9B8EC4), #7f72b0);
+    color: #ffffff;
+    border-radius: 32px;
+    padding: 68px 32px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 48px rgba(127, 114, 176, 0.35);
+  }
+
+  .cta-caja::after {
+    content: "";
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    right: -60px;
+    top: -80px;
+    pointer-events: none;
+  }
+
+  .cta-caja::before {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    left: -40px;
+    bottom: -60px;
+    pointer-events: none;
+  }
+
+  .cta-caja h2 {
+    font-size: 2.3rem;
+    margin-bottom: 12px;
+    position: relative;
+    color: #ffffff;
+    font-weight: 700;
+  }
+
+  .cta-caja p {
+    margin-bottom: 32px;
+    opacity: 0.95;
+    font-size: 1.15rem;
+    position: relative;
+    max-width: 580px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-btn-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+
+  @media (max-width: 860px) {
+    .cta {
+      padding: 10px 0 60px;
+    }
+    .cta-caja {
+      padding: 48px 24px;
+      border-radius: 24px;
+    }
+    .cta-caja h2 {
+      font-size: 1.8rem;
+    }
+    .cta-caja p {
+      font-size: 1rem;
+    }
+  }
+</style>

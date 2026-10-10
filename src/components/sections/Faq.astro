@@ -1,0 +1,25 @@
+---
+import SectionHeader from '../ui/SectionHeader.astro';
+import FaqAccordion from '../ui/FaqAccordion.astro';
+import { faqData } from '../../data/faq';
+---
+
+<section class="faq-seccion" id="faq">
+  <div class="contenedor">
+    <SectionHeader
+      badge="Resolvemos tus dudas"
+      title="Preguntas frecuentes"
+      subtitle="Todo lo que necesitas saber sobre nuestro servicio de recojo, lavado y entrega."
+    />
+
+    <FaqAccordion items={faqData} />
+  </div>
+</section>
+
+<style>
+  .faq-seccion {
+    background: linear-gradient(180deg, var(--fondo, #FAFAF8) 0%, #f6f4fa 100%);
+    position: relative;
+    overflow: hidden;
+  }
+</style>
