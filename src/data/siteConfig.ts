@@ -20,4 +20,5 @@ export const siteConfig: SiteConfig = {
     number: '51999999999',
     message: '¡Hola LAVANDA! Deseo solicitar el recojo de mi ropa a domicilio.',
   },
+  repository: 'https://github.com/HugoAdama/Lavanda',
 };

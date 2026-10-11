@@ -55,7 +55,7 @@ const currentYear = new Date().getFullYear();
       <div class="copy-line">
         <p>© {currentYear} {siteConfig.name}. Todos los derechos reservados.</p>
         <p class="autor-credito">
-          Desarrollado por <strong>Hugo Adama</strong>
+          Desarrollado por <a href={siteConfig.repository ?? 'https://github.com/HugoAdama/Lavanda'} target="_blank" rel="noopener noreferrer">Hugo Adama</a>
         </p>
       </div>
     </div>
@@ -146,9 +146,17 @@ const currentYear = new Date().getFullYear();
     opacity: 0.75;
   }
 
-  .autor-credito strong {
+  .autor-credito a {
     color: var(--menta, #7EC8C8);
     font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s ease, text-decoration 0.2s ease, opacity 0.2s ease;
+  }
+
+  .autor-credito a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
   @media (max-width: 860px) {

@@ -79,6 +79,7 @@ export interface SiteConfig {
     number: string;
     message: string;
   };
+  repository?: string;
 }
 
 export interface FaqItem {
